@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Генератор вопросов · Испанский и Английский · A1–C1</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: linear-gradient(145deg, #f5f7fa 0%, #e9edf5 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem;
+    }
+
+    .card {
+      max-width: 950px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(6px);
+      border-radius: 2.5rem;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 25px 40px -12px rgba(0, 20, 30, 0.25),
+                  inset 0 1px 3px rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      transition: all 0.2s ease;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #0b2b3b;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .flag-icons {
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    .subhead {
+      color: #3c5b6b;
+      font-weight: 400;
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      border-left: 4px solid #7fa8c0;
+      padding-left: 1rem;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: flex-end;
+      margin-bottom: 2.2rem;
+      background: #ffffffc9;
+      padding: 1.2rem 1.5rem;
+      border-radius: 3rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+      border: 1px solid #d9e2ec;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      min-width: 140px;
+      flex: 1;
+    }
+
+    .control-group label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: #4b6d7e;
+      padding-left: 0.3rem;
+    }
+
+    select, button {
+      font-family: inherit;
+      font-size: 0.95rem;
+      padding: 0.75rem 1.2rem;
+      border-radius: 2rem;
+      border: 1px solid #bcd0dd;
+      background: white;
+      color: #0a2a38;
+      font-weight: 500;
+      outline: none;
+      transition: all 0.15s;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    }
+
+    select:hover {
+      border-color: #7da1b8;
+      background: #f8fcff;
+    }
+
+    select:focus {
+      border-color: #3d7b9a;
+      box-shadow: 0 0 0 3px rgba(61, 123, 154, 0.15);
+    }
+
+    button {
+      background: #1c4e63;
+      border: 1px solid #1c4e63;
+      color: white;
+      font-weight: 600;
+      padding: 0.75rem 2rem;
+      box-shadow: 0 6px 14px rgba(28, 78, 99, 0.25);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex: 0 1 auto;
+      white-space: nowrap;
+    }
+
+    button:hover {
+      background: #0f3e51;
+      border-color: #0f3e51;
+      transform: scale(1.01);
+      box-shadow: 0 10px 18px rgba(28, 78, 99, 0.3);
+    }
+
+    button:active {
+      transform: scale(0.98);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .question-area {
+      background: #ffffff;
+      border-radius: 2rem;
+      padding: 2rem 2rem 2.2rem;
+      box-shadow: inset 0 1px 6px rgba(0, 0, 0, 0.02), 0 8px 18px -8px rgba(0, 30, 50, 0.15);
+      border: 1px solid #e2ecf5;
+      margin-bottom: 1.5rem;
+      transition: 0.1s;
+    }
+
+    .question-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      font-size: 0.85rem;
+      color: #47738b;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    .badge {
+      background: #d9eaf5;
+      padding: 0.35rem 1rem;
+      border-radius: 30px;
+      color: #14556e;
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+    }
+
+    .lang-badge {
+      background: #f0e7d6;
+      color: #7b5e2f;
+      padding: 0.35rem 1rem;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+    }
+
+    .question-text {
+      font-size: 2rem;
+      font-weight: 600;
+      line-height: 1.4;
+      color: #07212e;
+      margin-bottom: 1rem;
+      word-break: break-word;
+      padding: 0.25rem 0;
+    }
+
+    .question-context {
+      font-size: 1rem;
+      color: #3f6278;
+      margin-bottom: 0.5rem;
+      font-style: italic;
+      border-left: 4px solid #b6d3e5;
+      padding-left: 1rem;
+    }
+
+    .empty-state {
+      color: #6d8c9c;
+      font-size: 1.3rem;
+      text-align: center;
+      padding: 2rem 1rem;
+      font-weight: 400;
+    }
+
+    .action-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 0.8rem;
+    }
+
+    .small-btn {
+      background: transparent;
+      color: #1c4e63;
+      box-shadow: none;
+      border: 1px solid #b6cfdd;
+      padding: 0.5rem 1.5rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      gap: 6px;
+    }
+
+    .small-btn:hover {
+      background: #e3f0f8;
+      border-color: #6f9bb5;
+      transform: none;
+      box-shadow: none;
+      color: #0c3c4f;
+    }
+
+    .footer-note {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #6a8b9c;
+      margin-top: 1.5rem;
+      border-top: 1px solid #d0e0ec;
+      padding-top: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 1.5rem 1.2rem;
+        border-radius: 2rem;
+      }
+      .question-text {
+        font-size: 1.5rem;
+      }
+      .controls {
+        padding: 1rem;
+        border-radius: 2rem;
+      }
+      button {
+        padding: 0.75rem 1.2rem;
+        font-size: 0.9rem;
+        width: 100%;
+      }
+      .action-row {
+        justify-content: stretch;
+      }
+      .small-btn {
+        width: 100%;
+      }
+      h1 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>
+      <span class="flag-icons">🇪🇸</span> 
+      Генератор вопросов 
+      <span class="flag-icons">🇬🇧</span>
+    </h1>
+    <div class="subhead">
+      Испанский и английский · уровни A1 – C1
+    </div>
+
+    <!-- Панель управления -->
+    <div class="controls">
+      <div class="control-group">
+        <label for="langSelect">Язык</label>
+        <select id="langSelect">
+          <option value="es">🇪🇸 Испанский</option>
+          <option value="en">🇬🇧 Английский</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label for="levelSelect">Уровень</label>
+        <select id="levelSelect">
+          <option value="A1">A1 — Начальный</option>
+          <option value="A2">A2 — Элементарный</option>
+          <option value="B1">B1 — Средний</option>
+          <option value="B2">B2 — Средне-продвинутый</option>
+          <option value="C1">C1 — Продвинутый</option>
+        </select>
+      </div>
+      <button id="generateBtn">🎲 Сгенерировать вопрос</button>
+    </div>
+
+    <!-- Область вопроса -->
+    <div class="question-area" id="questionArea">
+      <div class="question-meta">
+        <span class="badge" id="levelBadge">A1</span>
+        <span class="lang-badge" id="langBadge">Испанский</span>
+      </div>
+      <div id="questionContent">
+        <div class="empty-state">
+          Нажмите «Сгенерировать вопрос»
+        </div>
+      </div>
+      <div class="action-row">
+        <button class="small-btn" id="copyBtn" style="display: none;">📋 Копировать вопрос</button>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      Каждый вопрос соответствует выбранному уровню и языку
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // -------------------- БАНК ВОПРОСОВ --------------------
+      const questionBank = {
+        es: {
+          A1: [
+            { text: "¿Cómo te llamas?", context: "Presentación personal" },
+            { text: "¿De dónde eres?", context: "Origen y nacionalidad" },
+            { text: "¿Cuántos años tienes?", context: "Edad" },
+            { text: "¿Qué hora es?", context: "La hora" },
+            { text: "¿Tienes hermanos?", context: "Familia" },
+            { text: "¿Te gusta el café?", context: "Gustos" },
+            { text: "¿Dónde vives?", context: "Vivienda" },
+            { text: "¿Qué día es hoy?", context: "Días de la semana" },
+            { text: "¿Cómo estás?", context: "Estados de ánimo" },
+            { text: "¿Hablas español?", context: "Idiomas" }
+          ],
+          A2: [
+            { text: "¿Qué hiciste el fin de semana pasado?", context: "Pretérito indefinido" },
+            { text: "¿Cuál es tu comida favorita y por qué?", context: "Preferencias y razones" },
+            { text: "¿Cómo vas al trabajo o a la escuela?", context: "Transporte y rutina" },
+            { text: "¿Qué planes tienes para mañana?", context: "Futuro próximo" },
+            { text: "¿Puedes describir tu casa?", context: "Descripción de vivienda" },
+            { text: "¿Qué te gusta hacer en tu tiempo libre?", context: "Ocio y aficiones" },
+            { text: "¿Has visitado algún país extranjero?", context: "Experiencias de viaje" },
+            { text: "¿Qué tiempo hace hoy?", context: "Clima" },
+            { text: "¿Con qué frecuencia vas al cine?", context: "Adverbios de frecuencia" },
+            { text: "¿Qué solías hacer cuando eras niño?", context: "Imperfecto" }
+          ],
+          B1: [
+            { text: "¿Qué opinas sobre el teletrabajo?", context: "Opinión y sociedad" },
+            { text: "¿Cuáles son las ventajas y desventajas de vivir en la ciudad?", context: "Argumentación" },
+            { text: "¿Cómo ha cambiado tu vida en los últimos años?", context: "Experiencias y cambios" },
+            { text: "¿Qué harías si tuvieras más tiempo libre?", context: "Condicional simple" },
+            { text: "¿Crees que es importante aprender idiomas?", context: "Educación y cultura" },
+            { text: "¿Qué problemas medioambientales te preocupan más?", context: "Medio ambiente" },
+            { text: "¿Cómo imaginas la tecnología en el futuro?", context: "Especulación" },
+            { text: "¿Has tenido alguna experiencia inolvidable? Cuéntala.", context: "Narración" },
+            { text: "¿Qué recomendaciones darías a un turista en tu país?", context: "Consejos" },
+            { text: "¿Qué piensas de las redes sociales?", context: "Tecnología y sociedad" }
+          ],
+          B2: [
+            { text: "¿Hasta qué punto la publicidad influye en nuestras decisiones?", context: "Análisis crítico" },
+            { text: "¿Debería ser obligatorio el servicio comunitario? Justifica.", context: "Debate social" },
+            { text: "¿Qué consecuencias tiene la globalización en las culturas locales?", context: "Globalización" },
+            { text: "¿Cómo afecta el estrés a la salud y qué soluciones propones?", context: "Salud y bienestar" },
+            { text: "¿Crees que la inteligencia artificial reemplazará muchos empleos?", context: "Futuro laboral" },
+            { text: "¿Qué medidas deberían tomar los gobiernos para reducir la desigualdad?", context: "Política social" },
+            { text: "¿Es la educación gratuita un derecho fundamental?", context: "Derechos humanos" },
+            { text: "¿Cómo podemos fomentar la sostenibilidad en las ciudades?", context: "Ecología urbana" },
+            { text: "¿Qué papel juega el arte en la sociedad actual?", context: "Cultura y arte" },
+            { text: "¿Debería regularse el uso de drones por privacidad?", context: "Ética y tecnología" }
+          ],
+          C1: [
+            { text: "¿En qué medida el lenguaje moldea nuestra percepción de la realidad?", context: "Filosofía del lenguaje" },
+            { text: "¿Es la meritocracia un mito en las sociedades contemporáneas?", context: "Sociología avanzada" },
+            { text: "¿Cómo influyen los sesgos cognitivos en la toma de decisiones políticas?", context: "Psicología política" },
+            { text: "¿Qué implicaciones éticas tiene la edición genética en humanos?", context: "Bioética" },
+            { text: "¿Puede el arte ser objetivamente evaluado o es puramente subjetivo?", context: "Estética" },
+            { text: "¿Cómo afecta la posverdad a la democracia moderna?", context: "Comunicación y política" },
+            { text: "¿Debería priorizarse la libertad individual sobre la seguridad colectiva?", context: "Filosofía política" },
+            { text: "¿Qué relación existe entre el poder económico y los medios de comunicación?", context: "Economía política" },
+            { text: "¿Cómo se construye la identidad en un mundo globalizado?", context: "Antropología cultural" },
+            { text: "¿Es sostenible el capitalismo tal como lo conocemos?", context: "Economía crítica" }
+          ]
+        },
+        en: {
+          A1: [
+            { text: "What's your name?", context: "Introductions" },
+            { text: "Where are you from?", context: "Origin and nationality" },
+            { text: "How old are you?", context: "Age" },
+            { text: "What time is it?", context: "Telling time" },
+            { text: "Do you have any brothers or sisters?", context: "Family" },
+            { text: "Do you like coffee?", context: "Preferences" },
+            { text: "Where do you live?", context: "Housing" },
+            { text: "What day is it today?", context: "Days of the week" },
+            { text: "How are you?", context: "Feelings" },
+            { text: "Do you speak English?", context: "Languages" }
+          ],
+          A2: [
+            { text: "What did you do last weekend?", context: "Past simple" },
+            { text: "What's your favourite food and why?", context: "Preferences and reasons" },
+            { text: "How do you get to work or school?", context: "Transport and routine" },
+            { text: "What are your plans for tomorrow?", context: "Future plans" },
+            { text: "Can you describe your house?", context: "Describing homes" },
+            { text: "What do you like doing in your free time?", context: "Hobbies and free time" },
+            { text: "Have you ever visited a foreign country?", context: "Travel experiences" },
+            { text: "What's the weather like today?", context: "Weather" },
+            { text: "How often do you go to the cinema?", context: "Adverbs of frequency" },
+            { text: "What did you use to do when you were a child?", context: "Used to" }
+          ],
+          B1: [
+            { text: "What do you think about remote work?", context: "Opinions and society" },
+            { text: "What are the pros and cons of living in a city?", context: "Argumentation" },
+            { text: "How has your life changed in recent years?", context: "Experiences and changes" },
+            { text: "What would you do if you had more free time?", context: "Second conditional" },
+            { text: "Do you think learning languages is important?", context: "Education and culture" },
+            { text: "Which environmental problems concern you most?", context: "Environment" },
+            { text: "How do you imagine technology in the future?", context: "Speculation" },
+            { text: "Have you had an unforgettable experience? Tell us.", context: "Narrative" },
+            { text: "What advice would you give to a tourist in your country?", context: "Giving advice" },
+            { text: "What do you think about social media?", context: "Technology and society" }
+          ],
+          B2: [
+            { text: "To what extent does advertising influence our decisions?", context: "Critical analysis" },
+            { text: "Should community service be mandatory? Justify your answer.", context: "Social debate" },
+            { text: "What are the consequences of globalisation on local cultures?", context: "Globalisation" },
+            { text: "How does stress affect health and what solutions do you propose?", context: "Health and wellness" },
+            { text: "Do you think artificial intelligence will replace many jobs?", context: "Future of work" },
+            { text: "What measures should governments take to reduce inequality?", context: "Social policy" },
+            { text: "Is free education a fundamental right?", context: "Human rights" },
+            { text: "How can we promote sustainability in cities?", context: "Urban ecology" },
+            { text: "What role does art play in today's society?", context: "Culture and art" },
+            { text: "Should drone use be regulated for privacy reasons?", context: "Ethics and technology" }
+          ],
+          C1: [
+            { text: "To what extent does language shape our perception of reality?", context: "Philosophy of language" },
+            { text: "Is meritocracy a myth in contemporary societies?", context: "Advanced sociology" },
+            { text: "How do cognitive biases influence political decision-making?", context: "Political psychology" },
+            { text: "What are the ethical implications of human gene editing?", context: "Bioethics" },
+            { text: "Can art be objectively evaluated or is it purely subjective?", context: "Aesthetics" },
+            { text: "How does post-truth affect modern democracy?", context: "Communication and politics" },
+            { text: "Should individual freedom be prioritised over collective security?", context: "Political philosophy" },
+            { text: "What is the relationship between economic power and the media?", context: "Political economy" },
+            { text: "How is identity constructed in a globalised world?", context: "Cultural anthropology" },
+            { text: "Is capitalism as we know it sustainable?", context: "Critical economics" }
+          ]
+        }
+      };
+
+      // DOM элементы
+      const langSelect = document.getElementById('langSelect');
+      const levelSelect = document.getElementById('levelSelect');
+      const generateBtn = document.getElementById('generateBtn');
+      const questionContent = document.getElementById('questionContent');
+      const levelBadge = document.getElementById('levelBadge');
+      const langBadge = document.getElementById('langBadge');
+      const copyBtn = document.getElementById('copyBtn');
+
+      // Текущее состояние для копирования
+      let currentQuestion = null;
+
+      // Вспомогательные функции
+      function getLanguageName(code) {
+        return code === 'es' ? 'Испанский' : 'Английский';
+      }
+
+      function getLanguageFlag(code) {
+        return code === 'es' ? '🇪🇸' : '🇬🇧';
+      }
+
+      // Обновление бейджей
+      function updateBadges(lang, level) {
+        levelBadge.textContent = level;
+        langBadge.textContent = getLanguageName(lang);
+      }
+
+      // Показать вопрос в интерфейсе
+      function renderQuestion(lang, level, questionObj) {
+        updateBadges(lang, level);
+        
+        // Контекст (если есть)
+        const contextHtml = questionObj.context 
+          ? `<div class="question-context">${escapeHtml(questionObj.context)}</div>` 
+          : '';
+        
+        questionContent.innerHTML = `
+          ${contextHtml}
+          <div class="question-text">${escapeHtml(questionObj.text)}</div>
+        `;
+
+        // Сохраняем для копирования
+        currentQuestion = {
+          text: questionObj.text,
+          context: questionObj.context || '',
+          lang: lang,
+          level: level
+        };
+
+        // Показываем кнопку копирования
+        copyBtn.style.display = 'inline-flex';
+      }
+
+      // Простая защита от XSS (хотя данные статичны, но на всякий случай)
+      function escapeHtml(unsafe) {
+        return unsafe
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      // Сброс / состояние загрузки
+      function showEmptyMessage(message = 'Нажмите «Сгенерировать вопрос»') {
+        questionContent.innerHTML = `<div class="empty-state">${message}</div>`;
+        copyBtn.style.display = 'none';
+        currentQuestion = null;
+        // обновляем бейджи в соответствии с выбранными селектами (но без вопроса)
+        const lang = langSelect.value;
+        const level = levelSelect.value;
+        updateBadges(lang, level);
+      }
+
+      // Генерация случайного вопроса
+      function generateQuestion() {
+        const lang = langSelect.value;       // 'es' или 'en'
+        const level = levelSelect.value;     // 'A1' ... 'C1'
+        
+        // Проверяем наличие банка для языка и уровня
+        if (!questionBank[lang] || !questionBank[lang][level] || questionBank[lang][level].length === 0) {
+          showEmptyMessage('Нет вопросов для выбранного уровня. Попробуйте другой.');
+          return;
+        }
+
+        const questions = questionBank[lang][level];
+        const randomIndex = Math.floor(Math.random() * questions.length);
+        const randomQuestion = questions[randomIndex];
+
+        renderQuestion(lang, level, randomQuestion);
+      }
+
+      // Копирование вопроса в буфер обмена
+      function copyQuestionToClipboard() {
+        if (!currentQuestion) return;
+
+        const langName = currentQuestion.lang === 'es' ? 'Испанский' : 'Английский';
+        const level = currentQuestion.level;
+        const text = currentQuestion.text;
+        const context = currentQuestion.context;
+
+        let copyText = `[${langName}, уровень ${level}]\n`;
+        if (context) copyText += `Контекст: ${context}\n`;
+        copyText += `Вопрос: ${text}`;
+
+        navigator.clipboard.writeText(copyText).then(() => {
+          // Визуальная обратная связь
+          const originalText = copyBtn.innerHTML;
+          copyBtn.innerHTML = '✅ Скопировано!';
+          setTimeout(() => {
+            copyBtn.innerHTML = originalText;
+          }, 1500);
+        }).catch(err => {
+          console.error('Ошибка копирования: ', err);
+          alert('Не удалось скопировать вопрос');
+        });
+      }
+
+      // Инициализация: показываем приветственное сообщение и синхронизируем бейджи
+      function init() {
+        // Устанавливаем начальные значения селектов
+        langSelect.value = 'es';
+        levelSelect.value = 'A1';
+        
+        // Отображаем пустое состояние с актуальными бейджами
+        showEmptyMessage();
+        
+        // Навешиваем обработчики
+        generateBtn.addEventListener('click', generateQuestion);
+        
+        copyBtn.addEventListener('click', copyQuestionToClipboard);
+        
+        // При смене языка или уровня обновляем бейджи, если нет активного вопроса
+        langSelect.addEventListener('change', () => {
+          if (!currentQuestion) {
+            updateBadges(langSelect.value, levelSelect.value);
+          } else {
+            // Если есть вопрос, но пользователь сменил язык/уровень – 
+            // можно оставить старый вопрос, но бейджи обновить? 
+            // Лучше сбросить вопрос, чтобы не было несоответствия.
+            // Сбросим вопрос при смене фильтров.
+            showEmptyMessage('Выберите параметры и нажмите «Сгенерировать вопрос»');
+          }
+        });
+        
+        levelSelect.addEventListener('change', () => {
+          if (!currentQuestion) {
+            updateBadges(langSelect.value, levelSelect.value);
+          } else {
+            showEmptyMessage('Выберите параметры и нажмите «Сгенерировать вопрос»');
+          }
+        });
+      }
+
+      // Запуск
+      init();
+    })();
+  </script>
+</body>
+</html>
